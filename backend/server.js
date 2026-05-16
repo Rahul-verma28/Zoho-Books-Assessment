@@ -15,15 +15,13 @@ app.get("/api/health", (_req, res) => {
   res.json({ status: "ok", timestamp: new Date().toISOString() });
 });
 
-// Zoho Books API routes
-app.use("/api/zoho", createZohoRouter(zohoAuth));
+// Zoho Books API routes - mount on both /api/zoho and /zoho in case Vercel strips the routePrefix
+app.use(["/api/zoho", "/zoho"], createZohoRouter(zohoAuth));
 
-// Only listen on port if not running in a serverless environment like Vercel
-if (process.env.NODE_ENV !== "production" || process.env.VERCEL !== "1") {
-  app.listen(PORT, () => {
-    console.log(`Backend server running on http://localhost:${PORT}`);
-    console.log(`Zoho domain: https://www.zohoapis${process.env.ZOHO_DOMAIN || ".in"}`);
-  });
-}
+// Always listen on the provided PORT (Vercel will inject this for services)
+app.listen(PORT, () => {
+  console.log(`Backend server running on port ${PORT}`);
+  console.log(`Zoho domain: https://www.zohoapis${process.env.ZOHO_DOMAIN || ".in"}`);
+});
 
 export default app;
