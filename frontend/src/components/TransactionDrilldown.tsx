@@ -5,7 +5,6 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
-import { Badge } from "@/components/ui/badge";
 import {
   Table,
   TableBody,
@@ -20,7 +19,7 @@ import {
   type Invoice,
   type Bill,
 } from "@/lib/zoho-api";
-import { FileText, ExternalLink, Paperclip, Calendar, Hash, User } from "lucide-react";
+import { FileText } from "lucide-react";
 
 interface TransactionDrilldownProps {
   isOpen: boolean;
@@ -219,29 +218,3 @@ export function TransactionDrilldown({
   );
 }
 
-function StatusBadge({ status }: { status: string }) {
-  const normalized = status?.toLowerCase() || "";
-
-  let variant: "default" | "secondary" | "outline" | "destructive" = "secondary";
-  let label = status;
-
-  if (normalized === "sent" || normalized === "open") {
-    variant = "default";
-    label = "Sent";
-  } else if (normalized === "paid" || normalized === "closed") {
-    variant = "outline";
-    label = "Paid";
-  } else if (normalized === "overdue") {
-    variant = "destructive";
-    label = "Overdue";
-  } else if (normalized === "draft") {
-    variant = "secondary";
-    label = "Draft";
-  }
-
-  return (
-    <Badge variant={variant} className="text-xs capitalize">
-      {label}
-    </Badge>
-  );
-}

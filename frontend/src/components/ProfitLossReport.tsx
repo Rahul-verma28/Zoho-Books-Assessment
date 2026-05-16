@@ -13,7 +13,6 @@ import {
   TrendingDown,
   RefreshCw,
   AlertCircle,
-  DollarSign,
   ChevronDown,
   ChevronUp,
 } from "lucide-react";
